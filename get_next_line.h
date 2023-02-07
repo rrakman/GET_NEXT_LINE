@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rrakman <rrakman@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/07 22:51:15 by rrakman           #+#    #+#             */
+/*   Updated: 2023/02/07 22:51:15 by rrakman          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
@@ -17,5 +29,7 @@ char *ft_readfile(int fd, char *buff, char *kolchi);
 char	*getfline(char *s);
 char *delfline(char *line, char *kolchi);
 char *get_next_line(int fd);
+char	*ft_strdup(char *s1);
+char    *send_join(char *s1, char *s2);
 
 #endif

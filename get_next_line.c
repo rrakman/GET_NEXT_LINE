@@ -1,10 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rrakman <rrakman@student.1337.ma>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/02/07 22:49:19 by rrakman           #+#    #+#             */
+/*   Updated: 2023/02/07 22:49:19 by rrakman          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "get_next_line.h"
 
-char *ft_findnewline(char *s)
+char	*ft_findnewline(char *s)
 {
-	int counter = 0;
+	int	counter = 0;
+	
 	if (!s)
-		return(0);
+		return (0);
 	while(s[counter] != '\n' && s[counter])
 	{
 		if(s[counter] == '\n')
@@ -14,20 +27,24 @@ char *ft_findnewline(char *s)
 	return (0);
 }
 
-char *ft_readfile(int fd, char *buff, char *kolchi)
+char *ft_readline(int fd, char *buff, char *kolchi)
 {
 	int bytes;
 	buff = malloc (BUFFER_SIZE + 1);
 	if (!buff)
 		return(0);
-	while(!ft_findnewline(kolchi))
+	while(!ft_findnewline(kolchi) || (read(fd,buff,BUFFER_SIZE) > 0))
 	{
 		bytes = read(fd,buff,BUFFER_SIZE);
 		if (bytes <= 0)
 			break;
 		buff[bytes] = '\0';
 		kolchi = ft_strjoin(kolchi,buff);
-		
+		if (!kolchi)
+		{
+			free(buff);
+			return (NULL);
+		}
 	}
 	free(buff);
 	return(kolchi);
@@ -37,7 +54,7 @@ char	*getfline(char *s)
 {
 	int	i;	
 	char *new;
-	
+
 	i = 0;
 	while (s[i] != '\n' && s[i])
 		i++;
@@ -46,7 +63,6 @@ char	*getfline(char *s)
 	new = malloc(i + 1);
 	if (!new)
 		return(0);
-	
 	i = 0;
 	while (s[i] != '\n' && s[i])
 	{
@@ -76,6 +92,7 @@ char *delfline(char *line, char *kolchi)
 		len++;
 	}
 	chyata[len] = 0;
+	free(line);
 	free(kolchi);
 	return(chyata);
 }
@@ -87,7 +104,7 @@ char *get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return(NULL);
 	line = 0;
-	kolchi = ft_readfile(fd,line,kolchi);
+	kolchi = ft_readline(fd,line,kolchi);
 	if (ft_strlen(kolchi) > 0)
 	{
 		line = getfline(kolchi);
@@ -102,19 +119,29 @@ char *get_next_line(int fd)
 		}
 		return(0);
 	}
+	//free(kolchi);
 	return(line);
 }
-
-int main ()
+void check_leaks();
+int main (int ac,char **av)
 {
-	int fd = open("file.txt",O_RDWR, 0777);
-	char *p;
-	//get_next_line(fd);
-	for(int i = 0; i < 10 ; i++)
+int fd = open(av[1],O_RDWR, 0777);
+char *p;
+	get_next_line(fd);
+	// for(int i = 0; i < 3 ; i++)
+	// {
+	// 	p = get_next_line(fd);
+	// 	printf("%s", p);
+	// 	free(p);
+	// }
+	int i = 0;
+	p = get_next_line(fd);
+	printf("%s", p);
+	while ((p = get_next_line(fd)) != NULL)
 	{
-		p = get_next_line(fd);
 		printf("%s", p);
-		free(p);
 	}
+	
+	// check_leaks();
 	//sleep(100);
 }
