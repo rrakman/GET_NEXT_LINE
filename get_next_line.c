@@ -27,13 +27,14 @@ char	*ft_findnewline(char *s)
 	return (0);
 }
 
-char *ft_readline(int fd, char *buff, char *kolchi)
+char *ft_readline(int fd, char *kolchi)
 {
+	char *buff;
 	int bytes;
 	buff = malloc (BUFFER_SIZE + 1);
 	if (!buff)
 		return(0);
-	while(!ft_findnewline(kolchi) || (read(fd,buff,BUFFER_SIZE) > 0))
+	while(!ft_findnewline(kolchi) )
 	{
 		bytes = read(fd,buff,BUFFER_SIZE);
 		if (bytes <= 0)
@@ -92,7 +93,6 @@ char *delfline(char *line, char *kolchi)
 		len++;
 	}
 	chyata[len] = 0;
-	free(line);
 	free(kolchi);
 	return(chyata);
 }
@@ -101,10 +101,10 @@ char *get_next_line(int fd)
 {
 	static char *kolchi;
 	char *line;
+	line = 0;
 	if (fd < 0 || BUFFER_SIZE < 0)
 		return(NULL);
-	line = 0;
-	kolchi = ft_readline(fd,line,kolchi);
+	kolchi = ft_readline(fd,kolchi);
 	if (ft_strlen(kolchi) > 0)
 	{
 		line = getfline(kolchi);
@@ -112,36 +112,31 @@ char *get_next_line(int fd)
 	}
 	if (ft_strlen(line) == 0)
 	{
-		if(ft_strlen(kolchi) != 0)
+		if(!kolchi)
 		{
 			free(kolchi);
 			kolchi = 0;
 		}
+		free(line);
+		line=0;
 		return(0);
 	}
 	//free(kolchi);
 	return(line);
+
 }
+/*
 void check_leaks();
-int main (int ac,char **av)
+int main ()
 {
-int fd = open(av[1],O_RDWR, 0777);
-char *p;
-	get_next_line(fd);
-	// for(int i = 0; i < 3 ; i++)
-	// {
-	// 	p = get_next_line(fd);
-	// 	printf("%s", p);
-	// 	free(p);
-	// }
-	int i = 0;
-	p = get_next_line(fd);
-	printf("%s", p);
-	while ((p = get_next_line(fd)) != NULL)
+	char *p;
+	int fd = open("file.txt", O_RDWR , 0777);
+	for(int i = 0; i < 3 ; i++)
 	{
+		p = get_next_line(fd);
 		printf("%s", p);
+		free(p);
 	}
-	
-	// check_leaks();
+	check_leaks();
 	//sleep(100);
-}
+}*/
