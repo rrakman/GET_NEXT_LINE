@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrakman <rrakman@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/07 22:49:19 by rrakman           #+#    #+#             */
-/*   Updated: 2023/02/07 22:49:19 by rrakman          ###   ########.fr       */
+/*   Created: 2023/01/02 21:20:41 by rrakman           #+#    #+#             */
+/*   Updated: 2023/02/23 16:00:45 by rrakman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_readline(int fd, char *kolchi)
+char	*ft_read(int fd, char *everything)
 {
 	char	*buff;
 	ssize_t	bytes;
@@ -21,23 +21,23 @@ char	*ft_readline(int fd, char *kolchi)
 	if (!buff)
 		return (0);
 	bytes = 1;
-	while (bytes != 0 && !ft_strchr(kolchi))
+	while (bytes != 0 && !ft_strchr(everything))
 	{
 		bytes = read (fd, buff, BUFFER_SIZE);
 		if (bytes == -1)
 		{
 			free (buff);
-			free (kolchi);
+			free (everything);
 			return (NULL);
 		}
 		buff[bytes] = '\0';
-		kolchi = send_join(kolchi, buff);
+		everything = send_join(everything, buff);
 	}
 	free (buff);
-	return (kolchi);
+	return (everything);
 }
 
-char	*getfline(char *s)
+char	*g_line(char *s)
 {
 	int		i;	
 	char	*new;
@@ -65,52 +65,52 @@ char	*getfline(char *s)
 	return (new);
 }
 
-char	*delfline(char *line, char *kolchi)
+char	*delline(char *line, char *everything)
 {
 	int		len;
 	int		lenfl;
-	char	*chyata;
+	char	*rest;
 
-	len = ft_strlen(kolchi);
+	len = ft_strlen(everything);
 	lenfl = ft_strlen(line);
-	chyata = malloc ((len - lenfl) + 1);
-	if (!chyata)
+	rest = malloc ((len - lenfl) + 1);
+	if (!rest)
 		return (0);
 	len = 0;
-	while (kolchi[lenfl])
+	while (everything[lenfl])
 	{
-		chyata[len] = kolchi[lenfl];
+		rest[len] = everything[lenfl];
 		lenfl++;
 		len++;
 	}
-	chyata[len] = 0;
-	free (kolchi);
-	return (chyata);
+	rest[len] = 0;
+	free (everything);
+	return (rest);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*kolchi;
+	static char	*everything;
 	char		*line;
 
 	line = 0;
-	if (fd < 0 || fd == 1 || fd == 2 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	kolchi = ft_readline(fd, kolchi);
-	if (ft_strlen(kolchi) > 0)
+	everything = ft_read(fd, everything);
+	if (ft_strlen(everything) > 0)
 	{
-		line = getfline(kolchi);
-		kolchi = delfline(line, kolchi);
-		if (ft_strlen(kolchi) == 0)
+		line = g_line(everything);
+		everything = delline(line, everything);
+		if (ft_strlen(everything) == 0)
 		{
-			free(kolchi);
-			kolchi = 0;
+			free(everything);
+			everything = 0;
 		}
 	}
-	else if (ft_strlen(kolchi) == 0)
+	else if (ft_strlen(everything) == 0)
 	{
-		free(kolchi);
-		kolchi = 0;
+		free(everything);
+		everything = 0;
 	}
 	return (line);
 }

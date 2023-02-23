@@ -25,9 +25,9 @@
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strlen(char *str);
 char	*ft_findnewline(char *s);
-char	*ft_readfile(int fd, char *kolchi);
-char	*getfline(char *s);
-char	*delfline(char *line, char *kolchi);
+char	*ft_read(int fd, char *everything);
+char	*g_line(char *s);
+char	*delline(char *line, char *everything);
 char	*get_next_line(int fd);
 char	*ft_strchr(char *str);
 char	*ft_strdup(char *s1);
