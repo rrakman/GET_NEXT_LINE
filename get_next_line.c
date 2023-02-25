@@ -114,20 +114,3 @@ char	*get_next_line(int fd)
 	}
 	return (line);
 }
-
-// int main ()
-// {
-// 	char *p;
-// 	int fd = open("file.txt", O_RDWR , 0777);
-// 	for(int i = 0; i < 4 ; i++)
-// 	{
-// 		p = get_next_line(fd);
-// 		printf("%s", p);
-// 		free(p);
-// 	}
-// 	sleep(100);
-// 	// printf("%s", get_next_line(fd));
-// 	// printf("%s", get_next_line(fd));
-// 	// printf("%s", get_next_line(fd));
-// 	// printf("%s", get_next_line(fd));
-// }

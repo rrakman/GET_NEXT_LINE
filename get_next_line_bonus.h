@@ -6,7 +6,7 @@
 /*   By: rrakman <rrakman@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/07 22:51:15 by rrakman           #+#    #+#             */
-/*   Updated: 2023/02/23 22:54:12 by rrakman          ###   ########.fr       */
+/*   Updated: 2023/02/25 07:30:28 by rrakman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,16 @@
 # define GET_NEXT_LINE_BONUS_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1
+#  define BUFFER_SIZE 5
 # endif
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <fcntl.h>
 # include <limits.h>
 
 char	*ft_strjoin(char *s1, char *s2);
 int		ft_strlen(char *str);
-char	*ft_findnewline(char *s);
 char	*ft_read(int fd, char *everything);
 char	*g_line(char *s);
 char	*delline(char *line, char *everything);

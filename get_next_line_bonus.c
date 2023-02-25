@@ -6,7 +6,7 @@
 /*   By: rrakman <rrakman@student.1337.ma>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 21:20:41 by rrakman           #+#    #+#             */
-/*   Updated: 2023/02/24 00:36:06 by rrakman          ###   ########.fr       */
+/*   Updated: 2023/02/25 07:30:40 by rrakman          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char	*delline(char *line, char *everything)
 
 char	*get_next_line(int fd)
 {
-	static char	*everything[INT_MAX];
+	static char	*everything[OPEN_MAX];
 	char		*line;
 
 	line = NULL;
@@ -114,20 +114,3 @@ char	*get_next_line(int fd)
 	}
 	return (line);
 }
-
-// int main ()
-// {
-// 	char *p,*p2;
-// 	int fd = open("file.txt", O_RDWR , 0777);
-// 	int fd2 = open("file2.txt", O_RDWR , 0777);
-// 	for(int i = 0; i < 9 ; i++)
-// 	{
-// 		p = get_next_line(fd);
-// 		printf("%s", p);
-// 		free(p);
-// 		p2 = get_next_line(fd2);
-// 		printf("%s", p2);
-// 		free(p2);
-// 	}
-// 	//sleep(100);
-// }
