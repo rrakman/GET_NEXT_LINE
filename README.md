@@ -5,10 +5,12 @@ Reading a line from a fd is way too tedious
 ###########################################
 
 get_next_line is a function that reads a file descriptor line by line.
-Description
+
+Description:
 
 The get_next_line function takes a file descriptor as its first argument and returns a line read from the file descriptor. The function reads the file descriptor one character at a time until it reaches the end of a line, indicated by a newline character, or the end of the file. Subsequent calls to get_next_line with the same file descriptor will continue reading the file from where the previous call left off.
-Usage
+
+Usage:
 
 To use get_next_line, include the function prototype in your source file:
 ```
