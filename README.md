@@ -2,7 +2,7 @@
 
 Reading a line from a fd is way too tedious
 
-###########################################
+#########################################
 
 get_next_line is a function that reads a file descriptor line by line.
 
